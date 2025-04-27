@@ -2,7 +2,7 @@ name: Deploy MkDocs
 
 on:
   push:
-    branches: 
+    branches:
       - main
 
 jobs:
@@ -22,10 +22,14 @@ jobs:
         run: |
           pip install mkdocs mkdocs-material
 
+      - name: Configure Git
+        run: |
+          git config --global user.email "github-actions@github.com"
+          git config --global user.name "github-actions"
+
       - name: Deploy to GitHub Pages
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
-          git config --global user.email "github-actions@github.com"
-          git config --global user.name "github-actions"
-          mkdocs gh-deploy --force --remote-branch gh-pages
+          git remote set-url origin https://${GH_TOKEN}@github.com/${{ github.repository }}.git
+          mkdocs gh-deploy --force
