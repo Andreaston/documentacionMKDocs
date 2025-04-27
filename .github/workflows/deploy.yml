@@ -29,7 +29,8 @@ jobs:
 
       - name: Deploy to GitHub Pages
         env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          PERSONAL_TOKEN: ${{ secrets.tokenPersonal }}
         run: |
-          git remote set-url origin https://${GH_TOKEN}@github.com/${{ github.repository }}.git
+          git remote set-url origin https://${PERSONAL_TOKEN}@github.com/${{ github.repository }}.git
           mkdocs gh-deploy --force
+
